@@ -18,7 +18,7 @@ public class SpawnNode : MonoBehaviour
     {
         if(timeToSpawn <= Time.time)
         {
-            Instantiate(enemy, transform.position, Quaternion.identity);
+            Instantiate(enemy, transform.position, Quaternion.identity, transform.parent);
             Destroy(gameObject);
         }
     }
