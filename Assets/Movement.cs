@@ -19,9 +19,12 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(movement == null)
+            return;
+
         if (target == null)
         {
+            
             movement.MoveTowards(movement.GetDirection(), movementSpeed);
         }
         else

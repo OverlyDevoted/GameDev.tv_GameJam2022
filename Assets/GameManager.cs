@@ -56,11 +56,13 @@ public class GameManager : MonoBehaviour
                 if(Input.GetKeyDown(KeyCode.LeftControl))
                 {
                     OnMain?.Invoke();
+                    playerManager.Die();
                     Debug.Log("Die");
                 }
                 if(Input.GetKeyDown(KeyCode.LeftShift))
                 {
                     OnMain?.Invoke();
+                    playerManager.Reincarnate();
                     Debug.Log("Reincarnate");
                 }
                 break;
