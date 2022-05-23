@@ -11,18 +11,22 @@ public class GameManager : MonoBehaviour
 
     public SpawnManager spawnManager;
     public PlayerManager playerManager;
+    public UIManager uiManager;
 
     public GameState gameState;
     // Start is called before the first frame update
     void Start()
     {
+        Physics.IgnoreLayerCollision(7, 7);
         OnMain.Invoke();
         playerManager = FindObjectOfType<PlayerManager>();
-        
-        playerManager.OnKilled.AddListener(() =>
+        uiManager = FindObjectOfType<UIManager>();
+
+        playerManager.OnKilled.AddListener((Ability current, Ability acquired, GameObject killer) =>
         {
             gameState = GameState.Death;
             OnDeath.Invoke();
+            uiManager.SetKillUI(current, acquired, killer);
         }
         );
 
@@ -30,6 +34,8 @@ public class GameManager : MonoBehaviour
         {
             DestroyObjectsWithTag("Kill");
             DestroyObjectsWithTag("Node");
+            DestroyObjectsWithTag("Enemy");
+            DestroyObjectsWithTag("KillBullet");
             playerManager.ResetPlayer();
             gameState = GameState.Main;
         });

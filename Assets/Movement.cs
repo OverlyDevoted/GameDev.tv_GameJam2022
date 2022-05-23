@@ -24,7 +24,6 @@ public class Movement : MonoBehaviour
 
         if (target == null)
         {
-            
             movement.MoveTowards(movement.GetDirection(), movementSpeed);
         }
         else

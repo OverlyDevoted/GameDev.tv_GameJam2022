@@ -5,15 +5,24 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public List<GameObject> spawnerNodeTypes;
-    public float nodeSpawnRate = 1.0f;
+    public float nodeSpawnRate;
+    float startSpawnRate;
+    public float nodeSpawnRateModifier;
     float currentSpawnRate;
-    public float randomizerMinMax = 0.2f;
-    Transform player;
+    public float randomizerMinMax;
+    public float levelTransitionRate;
+    float currentTransitionRate;
+    public int currentLevel = 0;
+    private void Awake()
+    {
+
+        startSpawnRate = nodeSpawnRate;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<PlayerManager>().transform;
-        OffsetTimer();
+        OffsetSpawnerTime();
+        OffsetLevelTime();
     }
 
     // Update is called once per frame
@@ -23,20 +32,40 @@ public class SpawnManager : MonoBehaviour
         {
             Vector3 spawnPosition = Camera.main.ScreenToWorldPoint(new Vector3(Random.Range(0, Camera.main.pixelWidth), Random.Range(0, Camera.main.pixelHeight)));
             spawnPosition.z = 0f;
-            Instantiate(spawnerNodeTypes[0], spawnPosition, Quaternion.identity, transform.parent);
-            OffsetTimer();
+            int nodeType = Mathf.RoundToInt(Random.Range(0, currentLevel*1.0f));
+            Debug.Log(nodeType);
+            Instantiate(spawnerNodeTypes[nodeType], spawnPosition, Quaternion.identity, transform.parent);
+            OffsetSpawnerTime();
+        }
+        if(currentTransitionRate <= Time.time)
+        {
+            if (currentLevel < spawnerNodeTypes.Count - 1)
+            {
+                currentLevel++;
+            }
+
+            if (nodeSpawnRate >= .3f)
+                nodeSpawnRate = nodeSpawnRate * nodeSpawnRateModifier;
+            OffsetLevelTime();
+            
         }
     }
-    void OffsetTimer()
+    void OffsetSpawnerTime()
     {
         currentSpawnRate = Time.time + nodeSpawnRate + Random.Range(-randomizerMinMax, randomizerMinMax);
+    }
+    void OffsetLevelTime()
+    {
+        currentTransitionRate = Time.time + levelTransitionRate;
     }
     public void DisableSpawner()
     {
         this.gameObject.SetActive(false);
+        currentLevel = 0;
     }
     public void EnableSpawner()
     {
         this.gameObject.SetActive(true);
+        nodeSpawnRate = startSpawnRate;
     }
 }

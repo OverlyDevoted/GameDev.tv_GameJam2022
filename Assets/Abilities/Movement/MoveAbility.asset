@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: MoveAbility
   m_EditorClassIdentifier: 
   name: Move
+  description: Grants movement
   cooldown: -1
   activeTime: -1
+  isEnabled: 1
+  icon: {fileID: 2800000, guid: 6d2504111f1431244b2e7a0089fa2e94, type: 3}
+  type: 0
   movementSpeed: 5
