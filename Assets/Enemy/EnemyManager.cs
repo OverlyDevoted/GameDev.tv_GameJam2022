@@ -6,12 +6,26 @@ public class EnemyManager : MonoBehaviour
 {
     public Ability ability;
     EnemyMovement eMovement;
-    EnemyShooting eShooting;
+    IEnemyAction eAction;
+    public int health = 1;
+    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet") && !gameObject.CompareTag("KillBullet"))
+        {
+            health--;
+            if (health == 0)
+            {
+                Destroy(gameObject);
+            }
+            Destroy(collision.gameObject);
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
         eMovement = GetComponent<EnemyMovement>();
-        eShooting = GetComponent<EnemyShooting>();
+        eAction = GetComponent<IEnemyAction>();
     }
 
     // Update is called once per frame
@@ -21,19 +35,24 @@ public class EnemyManager : MonoBehaviour
         {
             if (eMovement.state == MovementState.reached)
             {
-                if(eShooting != null)
+                if(eAction != null)
                 {
-                    eShooting.isReady = true;
+                    eAction.Enable(true);
                 }
             }
             else
             {
-                if (eShooting != null)
+                if (eAction != null)
                 {
-                    eShooting.isReady = false;
+                    eAction.Enable(false);
                 }
             }
 
         }
     }
+}
+public interface IEnemyAction
+{
+    public void Action();
+    public void Enable(bool enable);
 }

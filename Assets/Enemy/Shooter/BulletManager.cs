@@ -8,8 +8,6 @@ public class BulletManager : MonoBehaviour
     public float lifeTime = 0.75f;
     public float inaccuracyAngle = 10f;
     float currentLifeTime;
-    public List<string> targetTags;
-    public string exceptionTag;
     Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
@@ -25,19 +23,5 @@ public class BulletManager : MonoBehaviour
     {
         if (currentLifeTime <= Time.time)
             Destroy(gameObject);
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        foreach(string tag in targetTags)
-        {
-            if (collision.tag == tag)
-            {
-                if(tag != exceptionTag)
-                {
-                    Destroy(collision.gameObject);
-                }
-                Destroy(gameObject);
-            }
-        }
     }
 }

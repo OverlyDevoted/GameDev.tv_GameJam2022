@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011715a60a6518049bd191b4b879a2e1, type: 3}
   m_Name: SingleShot
   m_EditorClassIdentifier: 
-  name: 
-  description: 
-  cooldown: 0
+  name: Pistol
+  description: Shoots one bullet
+  cooldown: 0.6
   activeTime: 0
   isEnabled: 0
   icon: {fileID: 0}
-  type: 0
-  bullet: {fileID: 0}
+  type: 2
+  state: 0
+  bulletPrefab: {fileID: 8471206684517919758, guid: fc32006cd05fc8a4c9b63d8607f85ad0, type: 3}

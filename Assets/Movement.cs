@@ -34,6 +34,7 @@ public class Movement : MonoBehaviour
 }
 public interface IMovement
 {
+    public void ChargeTowards(Vector3 from, Vector3 to, float procentage);
     public void MoveTowards(Vector2 direction, float speed);
     public Vector2 GetDirection();
     public Vector2 GetDirection(Vector2 towards);

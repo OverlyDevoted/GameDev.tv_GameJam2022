@@ -12,17 +12,23 @@ public class PlayerManager : MonoBehaviour
     public KillEvent OnKilled;
     public UnityEvent OnReincarnate;
     public UnityEvent OnDeath;
-    private Movement movement;
+
     bool isDead = false;
+    bool isInvincible = false;
+    float currentInvincible;
+    public int baseHealth = 1;
+    int health = 1;
+
+    private Movement movement;
 
     //i could try to store it in a list smh to make it more dynamic
-    public Ability movementAb;
-    float currentMovement;
+    public Ability baseMovement;
+    
     public Ability attack;
-    float currentAttack;
     public KeyCode attackKey;
+    
     public Ability defence;
-    float currentDefence;
+    public KeyCode defenceKey;
 
     Ability acquiredAbility;
     // Start is called before the first frame update
@@ -46,54 +52,43 @@ public class PlayerManager : MonoBehaviour
                 attack.Cooldown(gameObject);
         }
 
+        if(defence != null)
+        {
+            if (defence.state == Ability.AbilityState.ready && Input.GetKeyDown(defenceKey))
+                defence.Activate(gameObject);
+
+            if (defence.state == Ability.AbilityState.active)
+                defence.Linger(gameObject);
+
+            if (defence.state == Ability.AbilityState.cooldown)
+                defence.Cooldown(gameObject);
+        }
+
+
+        if(isInvincible && currentInvincible < Time.time)
+        {   
+            Debug.Log("Not Invincible");
+            isInvincible = false;
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if((collision.gameObject.CompareTag("Kill") || collision.gameObject.CompareTag("KillBullet")) && !isDead)
+        if((collision.gameObject.CompareTag("Kill") || collision.gameObject.CompareTag("KillBullet")) && !isDead && !isInvincible)
         {
-            Debug.Log("Death");
-            acquiredAbility = collision.GetComponent<EnemyManager>().ability;
-            OnKilled.Invoke(acquiredAbility,acquiredAbility,collision.gameObject);
-            isDead = true;
-            /*Ability currentAbility;
+            health--;
             
-                        bool fillAbilitySlot = false;
-            switch (acquiredAbility.type)
+            if(health == 0)
             {
-                case Ability.AbilityType.based:
-                    if (movement != null)
-                    {
-                        fillAbilitySlot = true;
-                        currentAbility = movementAb;
-                    }
-                    break;
-                case Ability.AbilityType.attack:
-                    if 
-                    (attack != null) {
-                        fillAbilitySlot = true;
-                        currentAbility = attack;
-                    }
-                    break;
-                case Ability.AbilityType.defence:
-                    if
-                    (defence != null)
-                    {
-                        fillAbilitySlot = true;
-                        currentAbility = defence;
-                    }
-                    break;
+                Debug.Log("Death");
+                acquiredAbility = collision.GetComponent<EnemyManager>().ability;
+                OnKilled.Invoke(acquiredAbility, acquiredAbility, collision.gameObject);
+                isDead = true;
+
+
+                DisableAbilities();
+                Destroy(collision.gameObject);
             }
-
-            acquiredAbility = collision.GetComponent<EnemyManager>().ability;
-            
-            if(fillAbilitySlot)
-            OnKilled?.Invoke(currentAbility, acquiredAbility,collision.gameObject);
-            else
-                OnKilled?.Invoke(empty, acquiredAbility, collision.gameObject);
-            */
-
-            DisableAbilities();
         }
     }
 
@@ -111,8 +106,8 @@ public class PlayerManager : MonoBehaviour
             case Ability.AbilityType.based:
                 if(movement == null)
                 {
-                    movementAb = acquiredAbility;
-                    movementAb.Activate(this.gameObject);
+                    baseMovement = acquiredAbility;
+                    baseMovement.Activate(this.gameObject);
                     movement = GetComponent<Movement>();
                     movement.enabled = false;
                 }
@@ -138,20 +133,46 @@ public class PlayerManager : MonoBehaviour
     }
     public void EnableAbilities()
     {
+        health = baseHealth;
         isDead = false;
-        if(movement !=null)
-        movement.enabled = true;
+        if (movement != null)
+        {
+            movement.enabled = true;
 
-        if(attack != null)
-        attack.isEnabled = true;
+        }
+
+        if (attack != null)
+        {
+            attack.isEnabled = true;
+
+            if (attack.state == Ability.AbilityState.passive)
+                attack.Activate(gameObject);
+        }
+
+        if(defence != null)
+        {
+            defence.isEnabled = true;
+            if (defence.state == Ability.AbilityState.passive)
+                defence.Activate(gameObject);
+        }
+    }
+    public void BonusHealth(int bonus)
+    {
+        health += bonus;
     }
     public void Die()
     {
         OnDeath.Invoke();
         if(movement != null)
             Destroy(movement);
-        movementAb = null;
+        baseMovement = null;
         attack = null;
         defence = null;
+    }
+    public void SetInvincible(float invincibilityFrames)
+    {
+        Debug.Log("Invincible");
+        isInvincible = true;
+        currentInvincible = Time.time + invincibilityFrames;
     }
 }

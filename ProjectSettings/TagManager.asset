@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Kill
   - Node
+  - Bullet
+  - Enemy
+  - KillBullet
   layers:
   - Default
   - TransparentFX
@@ -14,7 +17,7 @@ TagManager:
   - Water
   - UI
   - Particle
-  - 
+  - Bullet
   - 
   - 
   - 

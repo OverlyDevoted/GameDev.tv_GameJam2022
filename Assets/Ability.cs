@@ -17,11 +17,13 @@ public class Ability : ScriptableObject
         ready,
         active,
         cooldown,
-        disabled
+        disabled,
+        passive
     }
     public enum AbilityType
     {
         based,
+        movement,
         attack,
         defence
     }
@@ -49,6 +51,7 @@ public class Ability : ScriptableObject
             }
         }
     }
+    
     public static void CopyTo(Ability from, Ability to)
     {
         to.name = from.name;
