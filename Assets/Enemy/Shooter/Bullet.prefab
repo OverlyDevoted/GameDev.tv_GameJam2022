@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 7
-  lifeTime: 1
+  lifeTime: 1.4
   inaccuracyAngle: 25
 --- !u!114 &-4561721931147411782
 MonoBehaviour:
@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ability: {fileID: 11400000, guid: f8102faf589e2a64babd8caed54abdcb, type: 2}
+  name: Shooter
   health: 5
 --- !u!50 &2580440305082624450
 Rigidbody2D:

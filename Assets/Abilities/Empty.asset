@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f8e42a0583de0d4890c0aa9510884ea, type: 3}
-  m_Name: Charge
+  m_Script: {fileID: 11500000, guid: 5fbdd6c12ec654443a9b161094fe48ec, type: 3}
+  m_Name: Empty
   m_EditorClassIdentifier: 
-  name: Charge
-  description: Dash through enemies
-  cooldown: 3
-  activeTime: 0.3
-  isEnabled: 1
-  icon: {fileID: 2800000, guid: e9c8bd60ae8940b459dd7af06ba360f8, type: 3}
-  type: 3
+  name: empty
+  description: Absorb to fill this slot
+  cooldown: 0
+  activeTime: 0
+  isEnabled: 0
+  icon: {fileID: 2800000, guid: cc26e18bb6a86904a9e24d2f44633ee5, type: 3}
+  type: 0
   state: 0
-  dashDistance: 5
+  movementSpeed: 0

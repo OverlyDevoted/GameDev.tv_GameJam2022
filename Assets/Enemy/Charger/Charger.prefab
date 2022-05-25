@@ -83,6 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ability: {fileID: 11400000, guid: 2d4f83c8defd6fd4bb50b6dba0a8b87d, type: 2}
+  name: Charger
   health: 1
 --- !u!114 &-7447555142653279171
 MonoBehaviour:
@@ -98,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chargingTime: 4
   chargePower: 10
+  inaccuracyAngle: 10
 --- !u!58 &-8372443827559630273
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -207,7 +209,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.6771244, g: 0.10849059, b: 1, a: 1}
   m_FlipX: 0

@@ -22,14 +22,15 @@ public class GameManager : MonoBehaviour
         playerManager = FindObjectOfType<PlayerManager>();
         uiManager = FindObjectOfType<UIManager>();
 
-        playerManager.OnKilled.AddListener((Ability current, Ability acquired, GameObject killer) =>
+        playerManager.OnKilled.AddListener((Ability current, Ability acquired, string killer) =>
         {
             gameState = GameState.Death;
             OnDeath.Invoke();
             uiManager.SetKillUI(current, acquired, killer);
         }
         );
-
+        playerManager.OnDeath.AddListener(uiManager.ResetAbilityUI);
+        playerManager.OnReincarnate.AddListener((Ability ability) => { uiManager.SetAbility(ability.icon, ability.type, ability.cooldown, ability.activeTime); });
         OnMain.AddListener(() =>
         {
             DestroyObjectsWithTag("Kill");

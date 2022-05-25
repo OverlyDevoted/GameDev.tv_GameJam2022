@@ -50,7 +50,7 @@ public class EnemyMovement : MonoBehaviour, IMovement
     public void MoveTowards(Vector2 direction, float speed)
     {
         if(state!= MovementState.reached)
-        rb.AddForce(direction*speed, ForceMode2D.Force);
+        rb.AddForce(direction*10f*speed, ForceMode2D.Force);
     }
 
     public void ChargeTowards(Vector3 from, Vector3 to, float procentage)

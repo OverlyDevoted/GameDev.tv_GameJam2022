@@ -26,7 +26,10 @@ public class Movement : MonoBehaviour
         {
             movement.MoveTowards(movement.GetDirection(), movementSpeed);
         }
-        else
+    }
+    private void FixedUpdate()
+    {
+        if(target != null)
         {
             movement.MoveTowards(movement.GetDirection(target.transform.position), movementSpeed);
         }

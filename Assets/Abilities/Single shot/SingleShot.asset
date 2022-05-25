@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: SingleShot
   m_EditorClassIdentifier: 
   name: Pistol
-  description: Shoots one bullet
+  description: Shoot one bullet
   cooldown: 0.6
   activeTime: 0
-  isEnabled: 0
-  icon: {fileID: 0}
+  isEnabled: 1
+  icon: {fileID: 2800000, guid: 80298eb638bd3b9408ebbe6fc4f2fa86, type: 3}
   type: 2
   state: 0
   bulletPrefab: {fileID: 8471206684517919758, guid: fc32006cd05fc8a4c9b63d8607f85ad0, type: 3}

@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ability: {fileID: 11400000, guid: f9a820c9b8e38eb408bdc8e63f39d972, type: 2}
+  name: Bruiser
   health: 1
 --- !u!58 &7091509265107284419
 CircleCollider2D:

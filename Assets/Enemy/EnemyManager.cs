@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     public Ability ability;
+    public string name;
     EnemyMovement eMovement;
     IEnemyAction eAction;
     public int health = 1;

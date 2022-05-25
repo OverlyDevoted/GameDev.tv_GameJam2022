@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c5e0d8362fb434597a7bf9268ad92a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 10
+  movementSpeed: 5
   target: {fileID: 0}
 --- !u!114 &-3717882974734673993
 MonoBehaviour:
@@ -83,6 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ability: {fileID: 11400000, guid: dcd79ba498d2f0644bbd6cc5d92d42da, type: 2}
+  name: Bruiser
   health: 1
 --- !u!114 &-3212512829647332469
 MonoBehaviour:

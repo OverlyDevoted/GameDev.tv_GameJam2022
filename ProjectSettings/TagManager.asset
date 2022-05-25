@@ -46,3 +46,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Death
+    uniqueID: 4258276551
+    locked: 0

@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 [System.Serializable]
-public class KillEvent : UnityEvent<Ability, Ability, GameObject>
+public class KillEvent : UnityEvent<Ability, Ability, string>
+{
+}
+
+[System.Serializable]
+public class ReincarnateEvent : UnityEvent<Ability>
 {
 }
 public class PlayerManager : MonoBehaviour
 {
     public Transform spawnPosition;
     public KillEvent OnKilled;
-    public UnityEvent OnReincarnate;
+    public ReincarnateEvent OnReincarnate;
     public UnityEvent OnDeath;
 
     bool isDead = false;
@@ -18,9 +23,11 @@ public class PlayerManager : MonoBehaviour
     float currentInvincible;
     public int baseHealth = 1;
     int health = 1;
-
+    public float invincibilityAfterHit = 0.2f;
     private Movement movement;
 
+
+    //this class should not handle this much ability logic
     //i could try to store it in a list smh to make it more dynamic
     public Ability baseMovement;
     
@@ -31,6 +38,7 @@ public class PlayerManager : MonoBehaviour
     public KeyCode defenceKey;
 
     Ability acquiredAbility;
+    public Ability empty;
     // Start is called before the first frame update
     void Start()
     {
@@ -77,17 +85,38 @@ public class PlayerManager : MonoBehaviour
         if((collision.gameObject.CompareTag("Kill") || collision.gameObject.CompareTag("KillBullet")) && !isDead && !isInvincible)
         {
             health--;
-            
+            SetInvincible(invincibilityAfterHit);
             if(health == 0)
             {
                 Debug.Log("Death");
                 acquiredAbility = collision.GetComponent<EnemyManager>().ability;
-                OnKilled.Invoke(acquiredAbility, acquiredAbility, collision.gameObject);
+                Ability currentAbility = empty;
+                switch (acquiredAbility.type)
+                {
+                    case Ability.AbilityType.based:
+                        if (baseMovement != null)
+                            currentAbility = baseMovement;
+                        break;
+                    case Ability.AbilityType.defence:
+                        if(defence != null)
+                            currentAbility = defence;
+                        break;
+                    case Ability.AbilityType.attack:
+                        if(attack != null)
+                            currentAbility = attack;
+                        break;
+                    case Ability.AbilityType.movement:
+                        break;
+
+                }
+                
+                OnKilled.Invoke(currentAbility, acquiredAbility, collision.gameObject.GetComponent<EnemyManager>().name);
                 isDead = true;
 
 
                 DisableAbilities();
                 Destroy(collision.gameObject);
+
             }
         }
     }
@@ -100,7 +129,7 @@ public class PlayerManager : MonoBehaviour
     public void Reincarnate()
     {
 
-        OnReincarnate.Invoke();
+        OnReincarnate.Invoke(acquiredAbility);
         switch (acquiredAbility.type) 
         {
             case Ability.AbilityType.based:
@@ -130,6 +159,9 @@ public class PlayerManager : MonoBehaviour
 
         if (attack != null)
             attack.isEnabled = false;
+
+        if(defence != null)
+            defence.isEnabled = false;
     }
     public void EnableAbilities()
     {
@@ -147,6 +179,8 @@ public class PlayerManager : MonoBehaviour
 
             if (attack.state == Ability.AbilityState.passive)
                 attack.Activate(gameObject);
+            else
+                attack.state = Ability.AbilityState.ready;
         }
 
         if(defence != null)
@@ -154,6 +188,8 @@ public class PlayerManager : MonoBehaviour
             defence.isEnabled = true;
             if (defence.state == Ability.AbilityState.passive)
                 defence.Activate(gameObject);
+            else
+                attack.state = Ability.AbilityState.ready;
         }
     }
     public void BonusHealth(int bonus)

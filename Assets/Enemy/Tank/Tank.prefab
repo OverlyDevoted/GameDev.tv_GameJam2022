@@ -52,6 +52,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distance: 0.5
   state: 0
+  followingDrag: 10
+  reachedDrag: 0
+  disableVelocityOnReached: 1
+  initiallyDisableVelocity: 0
 --- !u!114 &7054466934294956238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,7 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c5e0d8362fb434597a7bf9268ad92a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 8.5
+  movementSpeed: 3
   target: {fileID: 0}
 --- !u!114 &-3717882974734673993
 MonoBehaviour:
@@ -79,6 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ability: {fileID: 11400000, guid: 6f8b9567427301e4b836a4dbc2415d7b, type: 2}
+  name: Tank
   health: 3
 --- !u!58 &-8372443827559630273
 CircleCollider2D:
