@@ -7,6 +7,7 @@ public class BulletManager : MonoBehaviour
     public float bulletSpeed = 5f;
     public float lifeTime = 0.75f;
     public float inaccuracyAngle = 10f;
+    public float knockback = 1f;
     float currentLifeTime;
     Rigidbody2D rb;
     // Start is called before the first frame update

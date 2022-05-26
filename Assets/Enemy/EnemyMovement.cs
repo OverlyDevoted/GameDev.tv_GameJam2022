@@ -25,6 +25,9 @@ public class EnemyMovement : MonoBehaviour, IMovement
 
     public Vector2 GetDirection(Vector2 towards)
     {
+        if (state == MovementState.stunned)
+            return Vector2.zero;
+
         Vector2 direction = (towards - new Vector2(transform.position.x, transform.position.y)).normalized;
         transform.up = direction;
         if (Vector2.Distance(transform.position, towards) < distance)
@@ -52,11 +55,17 @@ public class EnemyMovement : MonoBehaviour, IMovement
         if(state!= MovementState.reached)
         rb.AddForce(direction*10f*speed, ForceMode2D.Force);
     }
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet") && !gameObject.CompareTag("KillBullet"))
+        {
+            rb.AddForce(collision.gameObject.transform.up*10f*collision.GetComponent<BulletModifiers>().knockback, ForceMode2D.Impulse);
+        }
+    }
     public void ChargeTowards(Vector3 from, Vector3 to, float procentage)
     {
         throw new System.NotImplementedException();
     }
 }
-public enum MovementState { following, reached }
+public enum MovementState { following, reached, stunned }
 

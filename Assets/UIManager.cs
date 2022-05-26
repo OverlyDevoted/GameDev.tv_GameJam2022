@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class UIManager : MonoBehaviour
 {
     public List<UIelement> UIelements;
@@ -20,17 +19,9 @@ public class UIManager : MonoBehaviour
     public RawImage baseAbility;
     
     public RawImage attackAbility;
-    float attackCooldown;
-    float attackActive;
-    float attackCurrentCool;
-    float attackCurrentActive;
     public Animator attackCurtain;
 
     public RawImage defenceAbility;
-    float defenceCooldown;
-    float defenceActive;
-    float defenceCurrentCool;
-    float defenceCurrentActive;
     public Animator defenceCurtain;
     
     public Texture empty;
@@ -47,38 +38,23 @@ public class UIManager : MonoBehaviour
                     element.OnEnable.AddListener(elementTo.DisableElement);
             }
         }
-
-       
     }
-
-    // Update is called once per frame
-    void Update()
+    IEnumerator PlayCurtain(Animator curtain, float cooldown, float active)
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            if (attackAbility != null)
-            {
-                
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            if (defenceAbility != null)
-            { 
-            
-            }
-        }
-
+        curtain.Play("Drop");
+        curtain.SetFloat("Speed", 0);
+        yield return new WaitForSeconds(active);
+        curtain.SetFloat("Speed", 1/cooldown);
     }
-    public void SetupCurtain(RectTransform curtain)
+    public void PlayAttackAnimation(float cooldown, float active)
     {
-
+        StartCoroutine(PlayCurtain(attackCurtain, cooldown, active));
     }
-    public void AnimateCooldown(float cooldown, float active, float currentCool, float currentActive, RawImage curtain)
+    public void PlayDefenceAnimation(float cooldown, float active)
     {
-        
+        StartCoroutine(PlayCurtain(defenceCurtain, cooldown, active));
     }
+
     public void SetKillUI(Ability current, Ability acquired, string killer)
     {
         
@@ -113,13 +89,9 @@ public class UIManager : MonoBehaviour
                 break;
             case Ability.AbilityType.attack:
                 attackAbility.texture = icon;
-                attackCooldown = cooldown;
-                attackActive = active;
                 break;
             case Ability.AbilityType.defence:
                 defenceAbility.texture = icon;
-                defenceCooldown = cooldown;
-                defenceActive = active;
                 break;
         }
 

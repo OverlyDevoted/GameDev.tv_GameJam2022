@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 6301935600367688086}
   - component: {fileID: 4239877703358458806}
   - component: {fileID: 6224602096298096190}
+  - component: {fileID: 3297684835530972315}
   - component: {fileID: 5058209750010845941}
   m_Layer: 7
   m_Name: PlayerSingleBullet
@@ -156,6 +157,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &3297684835530972315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8471206684517919758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb242d72447b6284cb70a432bd67bcc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knockBack: 1
 --- !u!114 &5058209750010845941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,10 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831b088f4087d9f4880dc6cd4ce9e790, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 5
-  lifeTime: 0.75
+  bulletSpeed: 8
+  lifeTime: 0.5
   inaccuracyAngle: 10
-  targetTags:
-  - Kill
-  - Enemy
-  exceptionTag: 
+  knockback: 1

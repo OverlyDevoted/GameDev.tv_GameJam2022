@@ -21,7 +21,8 @@ public class GameManager : MonoBehaviour
         OnMain.Invoke();
         playerManager = FindObjectOfType<PlayerManager>();
         uiManager = FindObjectOfType<UIManager>();
-
+        playerManager.OnAttack.AddListener(uiManager.PlayAttackAnimation);
+        playerManager.OnDefence.AddListener(uiManager.PlayDefenceAnimation);
         playerManager.OnKilled.AddListener((Ability current, Ability acquired, string killer) =>
         {
             gameState = GameState.Death;

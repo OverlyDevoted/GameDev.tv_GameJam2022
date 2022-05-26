@@ -9,14 +9,17 @@ public class SwordManager : MonoBehaviour
     Vector3 center;
     Vector3 startRelativePos;
     Vector3 endRelativePos;
+
     public float distance =1f;
     public float swingSpeed =1f;
     public float centerOffset = 1f;
     public float swingArcModifier = 0.1f;
+    
     float currentSwing;
     Collider2D collider;
     TrailRenderer trailRenderer;
     public float selfDestruct = 0.3f;
+    
     float currentSelfDestruct;
     int direction;
     // Start is called before the first frame update
@@ -46,13 +49,14 @@ public class SwordManager : MonoBehaviour
         trailRenderer.enabled = true;
         currentSwing = Time.time + swingSpeed;
 
-        
-        
+
+        transform.up = (endRelativePos - startRelativePos).normalized;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.DrawRay(transform.position, transform.up, Color.blue);
         if (currentSwing < Time.time)
         {
             if(collider.enabled)

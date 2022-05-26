@@ -7,6 +7,7 @@ public class SpawnNode : MonoBehaviour
     public GameObject enemy;
     public float spawnDelay = 3f;
     float timeToSpawn;
+    public float weight;
     // Start is called before the first frame update
     void Start()
     {

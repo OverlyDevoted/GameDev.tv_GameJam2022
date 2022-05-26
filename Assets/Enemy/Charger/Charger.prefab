@@ -85,6 +85,12 @@ MonoBehaviour:
   ability: {fileID: 11400000, guid: 2d4f83c8defd6fd4bb50b6dba0a8b87d, type: 2}
   name: Charger
   health: 1
+  model: {fileID: 2369280953123630084}
+  startColor: {r: 0.6784314, g: 0.10980392, b: 1, a: 1}
+  hitColor: {r: 0.35318425, g: 0.003826994, b: 0.8113208, a: 1}
+  particleOnHit: {fileID: 3325379259884085134, guid: 3927fb8b38ccc6c4fb03869836948621, type: 3}
+  particleDeath: {fileID: 3325379259884085134, guid: e3b186ec0635d6945aa0fcbb8fdd4fc1, type: 3}
+  hitTime: 0.1
 --- !u!114 &-7447555142653279171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,7 +121,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.15
+  m_Radius: 0.25
 --- !u!50 &7105774727426978658
 Rigidbody2D:
   serializedVersion: 4
@@ -163,7 +169,7 @@ Transform:
   m_GameObject: {fileID: 8470833043275649520}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.5, y: 0.7, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7054466934294956239}

@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c5e0d8362fb434597a7bf9268ad92a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 15
+  movementSpeed: 10
   target: {fileID: 0}
 --- !u!114 &-3717882974734673993
 MonoBehaviour:
@@ -67,6 +67,12 @@ MonoBehaviour:
   ability: {fileID: 0}
   name: Shooter
   health: 1
+  model: {fileID: 2732538240725453710}
+  startColor: {r: 1, g: 0.5254902, b: 0.75686276, a: 1}
+  hitColor: {r: 1, g: 1, b: 1, a: 1}
+  particleOnHit: {fileID: 3325379259884085134, guid: 3927fb8b38ccc6c4fb03869836948621, type: 3}
+  particleDeath: {fileID: 3325379259884085134, guid: 716b4f337c56bfe4c91954ef0e210ff0, type: 3}
+  hitTime: 0.1
 --- !u!114 &7054466934294956240
 MonoBehaviour:
   m_ObjectHideFlags: 0

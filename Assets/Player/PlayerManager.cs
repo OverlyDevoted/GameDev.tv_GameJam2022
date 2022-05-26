@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 [System.Serializable]
-public class KillEvent : UnityEvent<Ability, Ability, string>
-{
-}
-
+public class KillEvent : UnityEvent<Ability, Ability, string> { }
 [System.Serializable]
-public class ReincarnateEvent : UnityEvent<Ability>
-{
-}
+public class ReincarnateEvent : UnityEvent<Ability> { }
+
 public class PlayerManager : MonoBehaviour
 {
     public Transform spawnPosition;
+    public SpriteRenderer model;
+    public Color startColor;
+    public Color hitColor;
+
     public KillEvent OnKilled;
     public ReincarnateEvent OnReincarnate;
     public UnityEvent OnDeath;
+    public AbilityEvent OnAttack;
+    public AbilityEvent OnDefence;
 
     bool isDead = false;
     bool isInvincible = false;
@@ -26,7 +28,7 @@ public class PlayerManager : MonoBehaviour
     public float invincibilityAfterHit = 0.2f;
     private Movement movement;
 
-
+    Animator animator;
     //this class should not handle this much ability logic
     //i could try to store it in a list smh to make it more dynamic
     public Ability baseMovement;
@@ -43,6 +45,7 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         ResetPlayer();
+        animator = GetComponent<Animator>();
     }
     private void Update()
     {
@@ -51,7 +54,11 @@ public class PlayerManager : MonoBehaviour
         if(attack != null )
         {
             if(attack.state == Ability.AbilityState.ready && Input.GetKeyDown(attackKey))
+            {
+                OnAttack.Invoke(attack.cooldown,attack.activeTime);
                 attack.Activate(gameObject);
+                animator.SetTrigger("Shoot");
+            }
 
             if (attack.state == Ability.AbilityState.active)
                 attack.Linger(gameObject);
@@ -63,7 +70,11 @@ public class PlayerManager : MonoBehaviour
         if(defence != null)
         {
             if (defence.state == Ability.AbilityState.ready && Input.GetKeyDown(defenceKey))
+            {
+                OnDefence.Invoke(defence.cooldown, defence.activeTime);
                 defence.Activate(gameObject);
+                animator.SetTrigger("Shoot");
+            }
 
             if (defence.state == Ability.AbilityState.active)
                 defence.Linger(gameObject);
@@ -71,11 +82,18 @@ public class PlayerManager : MonoBehaviour
             if (defence.state == Ability.AbilityState.cooldown)
                 defence.Cooldown(gameObject);
         }
+        if(movement != null)
+        {
 
-
+            if (movement.state == MovementStateInner.idle)
+                animator.SetBool("isWalking", false);
+            else
+                animator.SetBool("isWalking", true);
+        }
         if(isInvincible && currentInvincible < Time.time)
         {   
             Debug.Log("Not Invincible");
+            model.color = startColor;
             isInvincible = false;
         }
     }
@@ -124,7 +142,7 @@ public class PlayerManager : MonoBehaviour
     public void ResetPlayer()
     {
         transform.position = spawnPosition.position;
-        
+        model.color = startColor;
     }
     public void Reincarnate()
     {
@@ -210,5 +228,6 @@ public class PlayerManager : MonoBehaviour
         Debug.Log("Invincible");
         isInvincible = true;
         currentInvincible = Time.time + invincibilityFrames;
+        model.color = hitColor;
     }
 }

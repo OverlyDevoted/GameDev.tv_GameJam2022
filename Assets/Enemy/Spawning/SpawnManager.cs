@@ -5,17 +5,20 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public List<GameObject> spawnerNodeTypes;
+    List<GameObject> initialSpawner;
     public float nodeSpawnRate;
     float startSpawnRate;
     public float nodeSpawnRateModifier;
     float currentSpawnRate;
     public float randomizerMinMax;
+    public float waveTransitionRate;
+    float currentWaveRate;
+    float currentWave;
     public float levelTransitionRate;
     float currentTransitionRate;
     public int currentLevel = 0;
     private void Awake()
     {
-
         startSpawnRate = nodeSpawnRate;
     }
     // Start is called before the first frame update
@@ -23,6 +26,7 @@ public class SpawnManager : MonoBehaviour
     {
         OffsetSpawnerTime();
         OffsetLevelTime();
+        OffsetWaveTime();
     }
 
     // Update is called once per frame
@@ -37,17 +41,22 @@ public class SpawnManager : MonoBehaviour
             Instantiate(spawnerNodeTypes[nodeType], spawnPosition, Quaternion.identity, transform.parent);
             OffsetSpawnerTime();
         }
-        if(currentTransitionRate <= Time.time)
+
+        if(currentWaveRate <= Time.time)
         {
-            if (currentLevel < spawnerNodeTypes.Count - 1)
+
+            if (nodeSpawnRate >= 1.2)
+                nodeSpawnRate = nodeSpawnRate * nodeSpawnRateModifier;
+            currentWave++;
+            if (currentLevel < spawnerNodeTypes.Count - 1 && currentWave ==3)
             {
+                currentWave = 0;
+                nodeSpawnRate = startSpawnRate;
                 currentLevel++;
             }
 
-            if (nodeSpawnRate >= .3f)
-                nodeSpawnRate = nodeSpawnRate * nodeSpawnRateModifier;
             OffsetLevelTime();
-            
+            OffsetWaveTime();
         }
     }
     void OffsetSpawnerTime()
@@ -58,6 +67,10 @@ public class SpawnManager : MonoBehaviour
     {
         currentTransitionRate = Time.time + levelTransitionRate;
     }
+    void OffsetWaveTime()
+    {
+        currentWaveRate = Time.time + waveTransitionRate;
+    }
     public void DisableSpawner()
     {
         this.gameObject.SetActive(false);
@@ -67,5 +80,8 @@ public class SpawnManager : MonoBehaviour
     {
         this.gameObject.SetActive(true);
         nodeSpawnRate = startSpawnRate;
+
+        OffsetSpawnerTime();
+        OffsetLevelTime();
     }
 }

@@ -135,6 +135,7 @@ MonoBehaviour:
   bulletSpeed: 7
   lifeTime: 1.4
   inaccuracyAngle: 25
+  knockback: 1
 --- !u!114 &-4561721931147411782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +151,10 @@ MonoBehaviour:
   ability: {fileID: 11400000, guid: f8102faf589e2a64babd8caed54abdcb, type: 2}
   name: Shooter
   health: 5
+  model: {fileID: 7686319082824529213}
+  startColor: {r: 1, g: 1, b: 1, a: 1}
+  hitColor: {r: 1, g: 1, b: 1, a: 1}
+  hitTime: 0.1
 --- !u!50 &2580440305082624450
 Rigidbody2D:
   serializedVersion: 4

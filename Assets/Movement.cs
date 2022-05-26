@@ -8,7 +8,7 @@ public class Movement : MonoBehaviour
     public float movementSpeed = 1f;
     public Transform target;
     public IMovement movement;
-
+    public MovementStateInner state;
     void Start()
     {
         movement = gameObject.GetComponent<IMovement>();
@@ -21,11 +21,16 @@ public class Movement : MonoBehaviour
     {
         if(movement == null)
             return;
-
+        Vector2 direction = Vector2.zero;
         if (target == null)
         {
-            movement.MoveTowards(movement.GetDirection(), movementSpeed);
+            direction = movement.GetDirection();
         }
+        if (direction.magnitude > 0)
+            state = MovementStateInner.moving;
+        else
+            state = MovementStateInner.idle;
+        movement.MoveTowards(direction, movementSpeed);
     }
     private void FixedUpdate()
     {
@@ -41,4 +46,8 @@ public interface IMovement
     public void MoveTowards(Vector2 direction, float speed);
     public Vector2 GetDirection();
     public Vector2 GetDirection(Vector2 towards);
+}
+public enum MovementStateInner
+{
+    moving, idle
 }

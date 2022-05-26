@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+[System.Serializable]
+public class AbilityEvent : UnityEvent<float, float> { }
 
 public class Ability : ScriptableObject
 {
