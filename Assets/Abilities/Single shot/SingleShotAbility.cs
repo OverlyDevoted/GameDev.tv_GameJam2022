@@ -16,6 +16,8 @@ public class SingleShotAbility : Ability
             bullet.transform.up = newPos - bullet.transform.position;
             state = AbilityState.active;
             currentActiveTime = Time.time + activeTime;
+            if(clip!=null)
+            AudioManager.PlayClip(clip);
         }
     }
 

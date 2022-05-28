@@ -26,18 +26,39 @@ public class UIManager : MonoBehaviour
     
     public Texture empty;
 
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI highscoreText;
+    public TextMeshProUGUI highscoreFlavor;
+    public TextMeshProUGUI deathScoreText;
+    float currentHighscore = 0;
     // Start is called before the first frame update
     void Start()
     {
         foreach(UIelement element in UIelements)
         {
-            Debug.Log(element.name);
             foreach(UIelement elementTo in UIelements)
             {
                 if (element != elementTo)
                     element.OnEnable.AddListener(elementTo.DisableElement);
             }
         }
+    }
+    public void SetDeathScores(float score, float highscore)
+    {
+        if (currentHighscore < highscore)
+        {
+            highscoreFlavor.text = "New Highscore!";
+            currentHighscore = highscore;
+        }
+        else
+            highscoreFlavor.text = "Highscore";
+        highscoreText.text = highscore.ToString();
+        deathScoreText.text = score.ToString();
+    }
+
+    public void SetScoreText(float score)
+    {
+        scoreText.text = score.ToString();
     }
     IEnumerator PlayCurtain(Animator curtain, float cooldown, float active)
     {

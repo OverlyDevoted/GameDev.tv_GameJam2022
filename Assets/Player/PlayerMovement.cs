@@ -34,4 +34,9 @@ public class PlayerMovement : MonoBehaviour, IMovement
         pos.y = Mathf.Clamp01(pos.y);
         transform.position = Camera.main.ViewportToWorldPoint(pos);
     }
+    
+    public void PlayStep(AudioClip clip)
+    {
+        AudioManager.PlayClip(clip);
+    }
 }

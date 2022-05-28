@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Charge
   description: Dash through enemies
-  cooldown: 3
-  activeTime: 0.3
+  cooldown: 1
+  activeTime: 0.1
   isEnabled: 0
   icon: {fileID: 2800000, guid: e9c8bd60ae8940b459dd7af06ba360f8, type: 3}
+  clip: {fileID: 8300000, guid: f8774da967b151544bbe03e6fb8490c9, type: 3}
   type: 3
-  state: 2
-  dashDistance: 5
+  state: 0
+  dashDistance: 3

@@ -41,6 +41,12 @@ public class PlayerManager : MonoBehaviour
 
     Ability acquiredAbility;
     public Ability empty;
+
+    public AudioClip deathClip;
+
+    public AudioClip playerHit;
+    public AudioClip absorb;
+    public MilkShake.ShakePreset shake;
     // Start is called before the first frame update
     void Start()
     {
@@ -92,7 +98,6 @@ public class PlayerManager : MonoBehaviour
         }
         if(isInvincible && currentInvincible < Time.time)
         {   
-            Debug.Log("Not Invincible");
             model.color = startColor;
             isInvincible = false;
         }
@@ -104,9 +109,13 @@ public class PlayerManager : MonoBehaviour
         {
             health--;
             SetInvincible(invincibilityAfterHit);
-            if(health == 0)
+            MilkShake.Shaker.ShakeAll(shake);
+            AudioManager.PlayClip(playerHit);
+            if(movement!=null)
+            movement.state = MovementStateInner.idle;
+            if (health == 0)
             {
-                Debug.Log("Death");
+                AudioManager.PlayClip(deathClip);
                 acquiredAbility = collision.GetComponent<EnemyManager>().ability;
                 Ability currentAbility = empty;
                 switch (acquiredAbility.type)
@@ -134,7 +143,7 @@ public class PlayerManager : MonoBehaviour
 
                 DisableAbilities();
                 Destroy(collision.gameObject);
-
+                return;
             }
         }
     }
@@ -146,7 +155,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void Reincarnate()
     {
-
+        AudioManager.PlayClip(absorb);
         OnReincarnate.Invoke(acquiredAbility);
         switch (acquiredAbility.type) 
         {
@@ -225,7 +234,6 @@ public class PlayerManager : MonoBehaviour
     }
     public void SetInvincible(float invincibilityFrames)
     {
-        Debug.Log("Invincible");
         isInvincible = true;
         currentInvincible = Time.time + invincibilityFrames;
         model.color = hitColor;

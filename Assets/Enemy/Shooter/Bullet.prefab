@@ -152,9 +152,12 @@ MonoBehaviour:
   name: Shooter
   health: 5
   model: {fileID: 7686319082824529213}
-  startColor: {r: 1, g: 1, b: 1, a: 1}
+  startColor: {r: 1, g: 0.6462264, b: 0.8438755, a: 1}
   hitColor: {r: 1, g: 1, b: 1, a: 1}
+  particleOnHit: {fileID: 0}
+  particleDeath: {fileID: 0}
   hitTime: 0.1
+  hitClip: {fileID: 0}
 --- !u!50 &2580440305082624450
 Rigidbody2D:
   serializedVersion: 4

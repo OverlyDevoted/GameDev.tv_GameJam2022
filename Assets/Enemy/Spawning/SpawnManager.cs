@@ -17,6 +17,8 @@ public class SpawnManager : MonoBehaviour
     public float levelTransitionRate;
     float currentTransitionRate;
     public int currentLevel = 0;
+
+    List<int> randomNodes = new List<int>();
     private void Awake()
     {
         startSpawnRate = nodeSpawnRate;
@@ -27,6 +29,9 @@ public class SpawnManager : MonoBehaviour
         OffsetSpawnerTime();
         OffsetLevelTime();
         OffsetWaveTime();
+        for(int i = 0; i < 3; i++) {
+            randomNodes.Add(0);
+        }
     }
 
     // Update is called once per frame
@@ -36,9 +41,8 @@ public class SpawnManager : MonoBehaviour
         {
             Vector3 spawnPosition = Camera.main.ScreenToWorldPoint(new Vector3(Random.Range(0, Camera.main.pixelWidth), Random.Range(0, Camera.main.pixelHeight)));
             spawnPosition.z = 0f;
-            int nodeType = Mathf.RoundToInt(Random.Range(0, currentLevel*1.0f));
-            Debug.Log(nodeType);
-            Instantiate(spawnerNodeTypes[nodeType], spawnPosition, Quaternion.identity, transform.parent);
+            int nodeType = Random.Range(0,3);
+            Instantiate(spawnerNodeTypes[randomNodes[nodeType]], spawnPosition, Quaternion.identity, transform.parent);
             OffsetSpawnerTime();
         }
 
@@ -50,9 +54,39 @@ public class SpawnManager : MonoBehaviour
             currentWave++;
             if (currentLevel < spawnerNodeTypes.Count - 1 && currentWave ==3)
             {
-                currentWave = 0;
                 nodeSpawnRate = startSpawnRate;
                 currentLevel++;
+            }
+            if (currentWave == 3)
+            {
+                Debug.Log("Wave node type list of level " + currentLevel);
+                for(int i=0;i<3;i++)
+                {    
+                    int index = Random.Range(0, currentLevel+1);
+                    if (currentLevel >= 3)
+                    {
+                        while (randomNodes.Contains(index))
+                        {
+                            index = Random.Range(0, currentLevel+1);
+                        }
+                    }
+                    else if (currentLevel == 2)
+                    {
+                        randomNodes[currentLevel] = 2;
+                        randomNodes[currentLevel - 1] = 1;
+                        continue;
+                    }
+                    else
+                    {
+                        randomNodes[0] = 1;
+                        continue;
+                    }
+                }
+
+                string lvl = "";
+                foreach (int skaicius in randomNodes)
+                    lvl += skaicius.ToString() + " ";
+                Debug.Log(lvl);
             }
 
             OffsetLevelTime();
@@ -75,13 +109,17 @@ public class SpawnManager : MonoBehaviour
     {
         this.gameObject.SetActive(false);
         currentLevel = 0;
+        currentWave = 0;
     }
     public void EnableSpawner()
     {
         this.gameObject.SetActive(true);
         nodeSpawnRate = startSpawnRate;
 
-        OffsetSpawnerTime();
+        for (int i = 0; i < 3; i++)
+            randomNodes[i]=0;
+
+            OffsetSpawnerTime();
         OffsetLevelTime();
     }
 }

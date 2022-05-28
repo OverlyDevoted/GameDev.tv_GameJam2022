@@ -8,6 +8,7 @@ public class EnemyManager : MonoBehaviour
     public string name;
     EnemyMovement eMovement;
     IEnemyAction eAction;
+    Animator animator;
     public int health = 1;
     public SpriteRenderer model;
     public Color startColor;
@@ -17,6 +18,7 @@ public class EnemyManager : MonoBehaviour
     public float hitTime = 0.1f;
     float currentHit;
     bool isHit;
+    public AudioClip hitClip;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Bullet") && !gameObject.CompareTag("KillBullet"))
@@ -36,7 +38,8 @@ public class EnemyManager : MonoBehaviour
     }
     // Start is called before the first frame update
     void Start()
-    {   
+    {
+        animator = GetComponent<Animator>();
         currentHit = Time.time;
         model = GetComponentInChildren<SpriteRenderer>();
         if(model != null)
@@ -51,6 +54,8 @@ public class EnemyManager : MonoBehaviour
         model.color = hitColor;
 
         eMovement.state = MovementState.stunned;
+        AudioManager.PlayClip(hitClip);
+
     }
     // Update is called once per frame
     void Update()
@@ -75,7 +80,6 @@ public class EnemyManager : MonoBehaviour
         }
         if(currentHit < Time.time && isHit)
         {
-            Debug.Log("Eh");
             isHit = false;
             model.color = startColor;
             eMovement.state = MovementState.following;

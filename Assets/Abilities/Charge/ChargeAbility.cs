@@ -25,6 +25,7 @@ public class ChargeAbility : Ability
         currentActiveTime = Time.time + activeTime;
         startPos = caller.transform.position;
         endPos = caller.transform.position + (new Vector3(direction.x,direction.y) * dashDistance);
+        AudioManager.PlayClip(clip);
     }
     public override void Linger(GameObject caller)
     {

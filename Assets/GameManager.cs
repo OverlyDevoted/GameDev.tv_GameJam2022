@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour
     public UIManager uiManager;
 
     public GameState gameState;
+
+    private float highscore = 0;
+    private float score;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +29,9 @@ public class GameManager : MonoBehaviour
         playerManager.OnDefence.AddListener(uiManager.PlayDefenceAnimation);
         playerManager.OnKilled.AddListener((Ability current, Ability acquired, string killer) =>
         {
+            if (score > highscore)
+                highscore = score;
+            uiManager.SetDeathScores((int)score,(int)highscore);
             gameState = GameState.Death;
             OnDeath.Invoke();
             uiManager.SetKillUI(current, acquired, killer);
@@ -34,6 +41,7 @@ public class GameManager : MonoBehaviour
         playerManager.OnReincarnate.AddListener((Ability ability) => { uiManager.SetAbility(ability.icon, ability.type, ability.cooldown, ability.activeTime); });
         OnMain.AddListener(() =>
         {
+            score = 0;
             DestroyObjectsWithTag("Kill");
             DestroyObjectsWithTag("Node");
             DestroyObjectsWithTag("Enemy");
@@ -75,6 +83,8 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case GameState.Gameplay:
+                score += Time.deltaTime;
+                uiManager.SetScoreText((int)score);
                 break;
         }
     }

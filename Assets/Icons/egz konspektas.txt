@@ -1,0 +1,95 @@
+INFO IS KONSULTACIJOS
+======================
+
+# Galimi teoriniai klausimai:
+- Paskirstytosios atminties programavimas, MPI
+Suteikia galimybe programuoti paskirstytos atminties procesorius.
+Tai standartine biblioteka
+Egzistuoja visuose platformuose, nepriklausomai nuo os
+Optimizuotas kompiliavimas
+Turi daug funkcionalumu paskirstytos atminties procesoriu valdymui
+
+Programa yra kompiliuojama MPI biblioteka ir gautas vykdomas failas paleidziamas pasirinktuose
+procesuose, kas suteikia lygiagretumas
+
+MPI-1 sudaro 4 pagrindines koncepcijos
+Duomenu siuntimo operacijos - point to point - vienas procesas siuncia kitas gauna	
+Komunikatoriai - specialus objektas kuris apibrezia procesu grupe. Visi procesai yra 
+priskiriami MPI_COMM_WORLD komunikatoriui. Komunikatorius naudojamas duomenu persiuntimo 
+operacijose kai norima kad tik tam tikri procesai gautu/siustu duomenis
+Siunciamu duomenu tipai - su persiunciamais duomenimis perduodamas ju duomenu tipas
+Virtualios topologijos - leidzia sudelioti MPI procesus pagal tam tikra geometrine topologija
+
+- Duomenų siuntimo būdai
+yra blokuotos ir neblokuotos siuntimo ir gavimo operacijos
+Blokuotos - blokuoja siuntima ar gavima iskvietusi procesa kol operacija nebus uzbaigta
+Nebluokota - tai nelaukia operacijos pabaigos
+
+Standartine MPI_Recv() - blokuojasi
+
+Sinchroninis - 
+MPI_Ssend - blokuojasi kol gavejas pradeda gauti duomenis
+MPI_Ssend( void* buf, int count, MPI_Datatype datatype,
+ int dest, int tag, MPI_Comm comm); 
+MPI_Issend - persiuncia operacijos vykdyma MPI bibliotekai ir iseina is funkcijos patikrinti
+ar ivykdytas persiuntimas galima request funckija
+MPI_Issend( void* buf, int count, MPI_Datatype datatype,
+ int dest, int tag, MPI_Comm comm, MPI_Request *request);
+Buferinis
+Standartinis
+"Ready"
+
+- GPGPU koncepcija
+general purpose gpu skaiciavimu atlikimas ant gpu skirti ne vaizdu generavimui - cuda, directx, opengl, vulkan
+- CUDA programavimo modelis (heterogeniniai skaičiavimai, kas yra kernel)
+tai kai host device instruktina device vykdyti skaiciavimus
+cpu vykdo operacijos kurios yra sunkiai islygiagretinamos
+gpu vykdo operacijas kurias galima islygiagretinti
+duomenys turi buti perduodami is cpu i gpu
+kernelio funkcija yra funkcija kurios operacijas gali vykdyti device, daznai tai buna 
+operacijos kuri vykdo islygiagretintos uzduoties dali
+kvieciant kerneli nurodoma vykdanciuju bloku skaicius ir bloku gijos
+galima naudoti threadId.x, blockId.x, blockDim.x funkcijas suzinot kiek threadu yra blokuose
+kuris blokas vykdo tam tikra procesa ar kuris threadas
+
+- Apibrėžti lygiagrečiųjų algoritmų efektyvumo matus
+Spartinimo koeficientas, efektyvumo koeficientas
+
+T 1 (N) - laikas per kuri issprendziamia uzduoti nuosekliai
+T P (N) - laikas per kuri issprendziama uzduotis padalinta i P procesu
+Sp(N) = T1/TP 
+Ideal speedup kai spartinimo koeficientas = P
+taciau del overheadu tai sunku pasiekti: communication, idle time, redundant calculations
+efektyvumo koef - nurodo kaip efektyviai naudojami procesai
+Sp(N)/P, skaicius tarp 0 ir 1 kuo arciau 1 tuo efektyviau naudojami procesai
+- Skaliarinės sandaugos skaičiavimo lygiagrečiojo algoritmo analizė (gali būti kažkoks panašus algoritmas ir jį reikės paaiškinti taip kaip nuo 9 paskaitos 20 skaidrės)
+vektoriu sandauga
+tarkime vykdymo laikas = 1
+t1(N) = (2N-1)*vykdymo laikas
+- Amdahlo dėsnis (suformuluoti, kas yra r, kas yra s, pateikti įrodymą tokį kaip 23 skaidrėje, išvados) **APIBENDRINTO AMDAHLO DĖSNIO NEBUS**
+
+sprendžiant tą patį uždavinį su vis daugiau 
+lygiagrečiųjų procesų gaunamas pagreitėjimas yra apribotas
+
+r yra algoritmo dalis, kurią galima apskaičiuoti lygiagrečiai, 
+o s = 1 – r yra likusioji algoritmo dalis, kurią galime vykdyti tik 
+nuosekliai
+
+- Pateikite lygiagrečiųjų algoritmų sudarymo etapus
+uzdavinio isskaidymas
+domain decomp - uzdavinys kuri
+uzduotis kuri atlieka tuos pacius veiksmus su skirtingais duomenimis
+rysiu tarp uzduociu nustatymas
+kiekviena uzduotis sprendzia su tam tikrai pradiniais duomenimis
+kai bent dali duomenu gauname issprendzius kitus procesus gauname eiliskumo rysius
+uzduociu paskirstymas tarp procesu
+
+# Galimi praktiniai MPI uždaviniai:
+- Realizuoti tą ir tą su MPI (geras pavyzdys XD)
+- Realizuoti broadcast
+- Realizuoti grupinės kažką (praklausiau)
+- Realizuoti reduction operatorių
+- Realizuoti su paprastais Send ir Receive
+
+# Galimi praktiniai CUDA uždaviniai:
+Tiesiog nagrinėti pavyzdžius vilke ir kažkas tokio ten bus. Vertins ant kiek suprantam kodą ir eiliškumą kaip kas turi vykti

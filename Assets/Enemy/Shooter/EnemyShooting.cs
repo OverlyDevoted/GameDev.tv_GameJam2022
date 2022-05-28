@@ -9,20 +9,28 @@ public class EnemyShooting : MonoBehaviour, IEnemyAction
     float currentFire;
     float shootFromDistance = 0.2f;
     bool isReady;
+    Animator animator;
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
+        animator.SetFloat("Speed", 1 / fireRate);
         currentFire = Time.time + fireRate;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(currentFire <= Time.time && isReady)
+        if(currentFire <= Time.time&&isReady)
         {
             Action();
             currentFire = Time.time + fireRate;
+            animator.SetTrigger("Charge");
+            animator.SetFloat("Speed", 1 / fireRate);
         }
+        if(currentFire-0.01f <= Time.time && !isReady)
+            animator.SetFloat("Speed", 0);
+        
     }
 
     public void Action()
@@ -32,8 +40,6 @@ public class EnemyShooting : MonoBehaviour, IEnemyAction
 
     public void Enable(bool enable)
     {
-        /*if(isReady != enable)
-            currentFire = Time.time + fireRate;
-        */isReady = enable;
+        isReady = enable;
     }
 }

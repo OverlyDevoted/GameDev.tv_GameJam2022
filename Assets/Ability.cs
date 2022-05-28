@@ -15,6 +15,7 @@ public class Ability : ScriptableObject
     protected float currentActiveTime;
     public bool isEnabled = false;
     public Texture icon;
+    public AudioClip clip;
     public enum AbilityState
     {
         ready,

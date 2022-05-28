@@ -69,6 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 3
   target: {fileID: 0}
+  state: 0
 --- !u!114 &-3717882974734673993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,10 +87,11 @@ MonoBehaviour:
   health: 3
   model: {fileID: 2369280953123630084}
   startColor: {r: 1, g: 1, b: 1, a: 1}
-  hitColor: {r: 0.3679245, g: 0.08503916, b: 0.08503916, a: 1}
+  hitColor: {r: 0.7169812, g: 0.10298694, b: 0.037201855, a: 1}
   particleOnHit: {fileID: 3325379259884085134, guid: 3927fb8b38ccc6c4fb03869836948621, type: 3}
   particleDeath: {fileID: 3325379259884085134, guid: a0c557f27b02647418b80bfc5b6b7cae, type: 3}
   hitTime: 2
+  hitClip: {fileID: 8300000, guid: fdf8d9b14fa9d914aa45bf1a7d7800bc, type: 3}
 --- !u!58 &-8372443827559630273
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class EnemyCharging : MonoBehaviour, IEnemyAction
     public float chargePower;
     Rigidbody2D rb;
     Transform target;
+    Animator animator;
     bool isReady;
     public float inaccuracyAngle = 10f;
     // Start is called before the first frame update
@@ -16,18 +17,24 @@ public class EnemyCharging : MonoBehaviour, IEnemyAction
     {
         rb = GetComponent<Rigidbody2D>();
         target = GetComponent<Movement>().target;
-
+        animator = GetComponent<Animator>();
         currentCharge = Time.time + chargingTime;
+        animator.SetFloat("Speed", 1 / chargingTime);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(currentCharge < Time.time)
+        if (currentCharge <= Time.time && isReady)
         {
             Action();
             currentCharge = Time.time + chargingTime;
+            animator.SetTrigger("Charge");
+            animator.SetFloat("Speed", 1 / chargingTime);
         }
+        if (currentCharge - 0.01f <= Time.time && !isReady)
+            animator.SetFloat("Speed", 0);
+
     }
 
     public void Action()
@@ -40,6 +47,7 @@ public class EnemyCharging : MonoBehaviour, IEnemyAction
     }
     public void Enable(bool enable)
     {
+       
         isReady = enable;
     }
 }
