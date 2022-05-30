@@ -193,6 +193,7 @@ MonoBehaviour:
   chargingTime: 2.5
   chargePower: 10
   inaccuracyAngle: 10
+  sfx: {fileID: 8300000, guid: f8774da967b151544bbe03e6fb8490c9, type: 3}
 --- !u!58 &-8372443827559630273
 CircleCollider2D:
   m_ObjectHideFlags: 0

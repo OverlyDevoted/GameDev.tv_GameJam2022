@@ -10,6 +10,7 @@ public class EnemyShooting : MonoBehaviour, IEnemyAction
     float shootFromDistance = 0.2f;
     bool isReady;
     Animator animator;
+    public AudioClip sfx;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +36,7 @@ public class EnemyShooting : MonoBehaviour, IEnemyAction
 
     public void Action()
     {
+        AudioManager.PlayClip(sfx);
         Instantiate(bullet, transform.position + transform.up * shootFromDistance, transform.rotation);
     }
 

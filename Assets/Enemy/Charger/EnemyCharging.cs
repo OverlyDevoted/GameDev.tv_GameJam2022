@@ -12,6 +12,7 @@ public class EnemyCharging : MonoBehaviour, IEnemyAction
     Animator animator;
     bool isReady;
     public float inaccuracyAngle = 10f;
+    public AudioClip sfx;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +40,7 @@ public class EnemyCharging : MonoBehaviour, IEnemyAction
 
     public void Action()
     {
-        
+        AudioManager.PlayClip(sfx);
         float currentAngle = Mathf.Atan2(transform.up.y, transform.up.x) * Mathf.Rad2Deg;
         Vector3 randomized = Quaternion.AngleAxis(currentAngle + Random.Range(-inaccuracyAngle, inaccuracyAngle), Vector3.forward) * Vector3.right;
         transform.up = randomized;

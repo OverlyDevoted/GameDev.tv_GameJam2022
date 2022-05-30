@@ -227,7 +227,9 @@ MonoBehaviour:
   gameStartClip: {fileID: 8300000, guid: 0a1506f1c08d5b34b8a1ab824f5f6fdf, type: 3}
   playerHit: {fileID: 8300000, guid: 12c6eab964e1fea40876c4ae71bb3b75, type: 3}
   absorb: {fileID: 8300000, guid: c499cac204d15e14584ba8cb57eed8e5, type: 3}
+  loseAb: {fileID: 8300000, guid: cdd579a9e970b1942a63e6cc5d071c2a, type: 3}
   shake: {fileID: 11400000, guid: bc8220c55ebb8a248bc4e5540a56a5d3, type: 2}
+  hitParticles: {fileID: 3325379259884085134, guid: d353c4fc6f30b9e468c9a6a6eaa4e7ca, type: 3}
 --- !u!50 &37943700
 Rigidbody2D:
   serializedVersion: 4
@@ -501,6 +503,7 @@ GameObject:
   - component: {fileID: 97109189}
   - component: {fileID: 97109188}
   - component: {fileID: 97109187}
+  - component: {fileID: 97109190}
   m_Layer: 0
   m_Name: AudioSource
   m_TagString: Untagged
@@ -631,6 +634,102 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &97109190
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97109186}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &107878174
 GameObject:
   m_ObjectHideFlags: 0
@@ -3403,14 +3502,15 @@ MonoBehaviour:
   deathScoreText: {fileID: 49987543}
   tipsText: {fileID: 706925197}
   tipsList:
-  - Get killed by enemies. Absorb their powers, become stronger and reach higher
+  - Get bested by enemies. Absorb their powers, become stronger and reach higher
     scores.
   - '"Only through repetition can we reach real mastery" -Sun Tzu'
   - Death is only the beginning...
   - 'The longer you live the more different souls appear for absorption '
-  - Different enemies bear different abilities. Try dying to them to see what ability
-    they bear
+  - Different enemies bear different abilities. Try surrendering to them to see what
+    ability they bear
   - Dash ability triggers in the direction you are moving
+  - Some enemies don't go in one hit, so be sure to give them extra sauce
 --- !u!1 &1104978710
 GameObject:
   m_ObjectHideFlags: 0

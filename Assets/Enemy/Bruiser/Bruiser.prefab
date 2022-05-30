@@ -192,6 +192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 9215855145695785933, guid: e2a2dfbf70b13cc4d915c4d17ffe013d, type: 3}
   fireRate: 1
+  sfx: {fileID: 8300000, guid: 352f169f4c03a9746b6cad290f38eaa2, type: 3}
 --- !u!58 &-8372443827559630273
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -47,6 +47,7 @@ public class PlayerManager : MonoBehaviour
 
     public AudioClip playerHit;
     public AudioClip absorb;
+    public AudioClip loseAb;
     public MilkShake.ShakePreset shake;
     public ParticleSystem hitParticles;
     // Start is called before the first frame update
@@ -234,6 +235,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void Die()
     {
+        AudioManager.PlayClip(loseAb);
         OnDeath.Invoke();
         if(movement != null)
             Destroy(movement);
