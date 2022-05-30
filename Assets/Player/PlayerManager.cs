@@ -43,10 +43,12 @@ public class PlayerManager : MonoBehaviour
     public Ability empty;
 
     public AudioClip deathClip;
+    public AudioClip gameStartClip;
 
     public AudioClip playerHit;
     public AudioClip absorb;
     public MilkShake.ShakePreset shake;
+    public ParticleSystem hitParticles;
     // Start is called before the first frame update
     void Start()
     {
@@ -94,9 +96,13 @@ public class PlayerManager : MonoBehaviour
             if (movement.state == MovementStateInner.idle)
                 animator.SetBool("isWalking", false);
             else
+            {
                 animator.SetBool("isWalking", true);
+            }
         }
-        if(isInvincible && currentInvincible < Time.time)
+        else
+            animator.SetBool("isWalking", false);
+        if (isInvincible && currentInvincible < Time.time)
         {   
             model.color = startColor;
             isInvincible = false;
@@ -108,6 +114,7 @@ public class PlayerManager : MonoBehaviour
         if((collision.gameObject.CompareTag("Kill") || collision.gameObject.CompareTag("KillBullet")) && !isDead && !isInvincible)
         {
             health--;
+            Instantiate(hitParticles, transform.position, Quaternion.identity);
             SetInvincible(invincibilityAfterHit);
             MilkShake.Shaker.ShakeAll(shake);
             AudioManager.PlayClip(playerHit);
@@ -165,6 +172,7 @@ public class PlayerManager : MonoBehaviour
                     baseMovement = acquiredAbility;
                     baseMovement.Activate(this.gameObject);
                     movement = GetComponent<Movement>();
+                    movement.state = MovementStateInner.idle;
                     movement.enabled = false;
                 }
 
@@ -192,6 +200,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void EnableAbilities()
     {
+        AudioManager.PlayClip(gameStartClip);
         health = baseHealth;
         isDead = false;
         if (movement != null)
@@ -216,7 +225,7 @@ public class PlayerManager : MonoBehaviour
             if (defence.state == Ability.AbilityState.passive)
                 defence.Activate(gameObject);
             else
-                attack.state = Ability.AbilityState.ready;
+                defence.state = Ability.AbilityState.ready;
         }
     }
     public void BonusHealth(int bonus)

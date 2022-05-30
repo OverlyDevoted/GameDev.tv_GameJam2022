@@ -53,6 +53,7 @@ public class EnemyManager : MonoBehaviour
         currentHit = Time.time + hitTime;
         model.color = hitColor;
 
+        eMovement.SetDrag(eMovement.followingDrag);
         eMovement.state = MovementState.stunned;
         AudioManager.PlayClip(hitClip);
 

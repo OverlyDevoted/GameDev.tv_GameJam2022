@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6492a5ac0a92f5b4d9ddee0cb068f6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 4
+  distance: 5
   state: 0
   followingDrag: 10
   reachedDrag: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 3812431743943902806, guid: c145709870ad2704e893df96af5b2064, type: 3}
-  fireRate: 1
+  fireRate: 1.75
 --- !u!58 &-8372443827559630273
 CircleCollider2D:
   m_ObjectHideFlags: 0

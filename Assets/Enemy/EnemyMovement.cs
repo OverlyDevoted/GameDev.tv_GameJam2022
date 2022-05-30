@@ -37,13 +37,13 @@ public class EnemyMovement : MonoBehaviour, IMovement
                 rb.velocity = Vector2.zero;
                 hasDisabled = true;
             }
-            if(rb.drag!=reachedDrag)
-            rb.drag = reachedDrag;
+            if (rb.drag != reachedDrag)
+                SetDrag(reachedDrag);
             state = MovementState.reached;
             return Vector2.zero;
         }
-        if(rb.drag!=followingDrag)
-        rb.drag = followingDrag;
+        if (rb.drag != followingDrag)
+            SetDrag(followingDrag);
         if (initiallyDisableVelocity)
             hasDisabled = false;
         state = MovementState.following;
@@ -65,6 +65,10 @@ public class EnemyMovement : MonoBehaviour, IMovement
     public void ChargeTowards(Vector3 from, Vector3 to, float procentage)
     {
         throw new System.NotImplementedException();
+    }
+    public void SetDrag(float drag)
+    {
+        rb.drag = drag;
     }
 }
 public enum MovementState { following, reached, stunned }

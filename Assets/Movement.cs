@@ -14,6 +14,7 @@ public class Movement : MonoBehaviour
         movement = gameObject.GetComponent<IMovement>();
         if(movement.GetType() == typeof(EnemyMovement))
             target = GameObject.FindGameObjectWithTag("Player").transform;
+        state = MovementStateInner.idle;
     }
 
     // Update is called once per frame

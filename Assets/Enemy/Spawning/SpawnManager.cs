@@ -22,6 +22,11 @@ public class SpawnManager : MonoBehaviour
     private void Awake()
     {
         startSpawnRate = nodeSpawnRate;
+
+        for (int i = 0; i < 3; i++)
+        {
+            randomNodes.Add(0);
+        }
     }
     // Start is called before the first frame update
     void Start()
@@ -29,9 +34,6 @@ public class SpawnManager : MonoBehaviour
         OffsetSpawnerTime();
         OffsetLevelTime();
         OffsetWaveTime();
-        for(int i = 0; i < 3; i++) {
-            randomNodes.Add(0);
-        }
     }
 
     // Update is called once per frame
@@ -52,26 +54,27 @@ public class SpawnManager : MonoBehaviour
             if (nodeSpawnRate >= 1.2)
                 nodeSpawnRate = nodeSpawnRate * nodeSpawnRateModifier;
             currentWave++;
-            if (currentLevel < spawnerNodeTypes.Count - 1 && currentWave ==3)
+            if (currentLevel < spawnerNodeTypes.Count && currentWave ==3)
             {
                 nodeSpawnRate = startSpawnRate;
                 currentLevel++;
             }
+            //Debug.Log( "Wave " +currentWave);
+
+            //Debug.Log("Level " + currentLevel);
             if (currentWave == 3)
             {
-                Debug.Log("Wave node type list of level " + currentLevel);
+                //Debug.Log("Wave node type list of level " + currentLevel);
                 for(int i=0;i<3;i++)
                 {    
-                    int index = Random.Range(0, currentLevel+1);
+                    int index = Random.Range(0, currentLevel);
                     if (currentLevel >= 3)
                     {
-                        while (randomNodes.Contains(index))
-                        {
-                            index = Random.Range(0, currentLevel+1);
-                        }
+                        randomNodes[i] = index;
                     }
                     else if (currentLevel == 2)
                     {
+                        randomNodes[currentLevel-2] = 0;
                         randomNodes[currentLevel] = 2;
                         randomNodes[currentLevel - 1] = 1;
                         continue;
@@ -82,11 +85,12 @@ public class SpawnManager : MonoBehaviour
                         continue;
                     }
                 }
-
+                
                 string lvl = "";
                 foreach (int skaicius in randomNodes)
                     lvl += skaicius.ToString() + " ";
-                Debug.Log(lvl);
+                //Debug.Log(lvl);
+                currentWave = 0;
             }
 
             OffsetLevelTime();
@@ -110,14 +114,15 @@ public class SpawnManager : MonoBehaviour
         this.gameObject.SetActive(false);
         currentLevel = 0;
         currentWave = 0;
+
+        for (int i = 0; i < 3; i++)
+            randomNodes[i] = 0;
     }
     public void EnableSpawner()
     {
         this.gameObject.SetActive(true);
         nodeSpawnRate = startSpawnRate;
 
-        for (int i = 0; i < 3; i++)
-            randomNodes[i]=0;
 
             OffsetSpawnerTime();
         OffsetLevelTime();

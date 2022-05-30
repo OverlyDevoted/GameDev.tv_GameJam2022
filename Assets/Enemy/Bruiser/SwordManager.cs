@@ -56,7 +56,6 @@ public class SwordManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(transform.position, transform.up, Color.blue);
         if (currentSwing < Time.time)
         {
             if(collider.enabled)

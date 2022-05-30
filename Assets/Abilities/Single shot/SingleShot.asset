@@ -18,7 +18,7 @@ MonoBehaviour:
   activeTime: 0
   isEnabled: 0
   icon: {fileID: 2800000, guid: 80298eb638bd3b9408ebbe6fc4f2fa86, type: 3}
-  clip: {fileID: 8300000, guid: 7ab5ab1ed7443fb47a88c2f218560167, type: 3}
+  clip: {fileID: 8300000, guid: d2a0a6e2e42342b4b933567d928745e0, type: 3}
   type: 2
-  state: 0
+  state: 2
   bulletPrefab: {fileID: 8471206684517919758, guid: fc32006cd05fc8a4c9b63d8607f85ad0, type: 3}

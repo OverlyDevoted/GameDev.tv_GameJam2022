@@ -31,6 +31,9 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI highscoreFlavor;
     public TextMeshProUGUI deathScoreText;
     float currentHighscore = 0;
+
+    public TextMeshProUGUI tipsText;
+    public List<string> tipsList;
     // Start is called before the first frame update
     void Start()
     {
@@ -94,6 +97,8 @@ public class UIManager : MonoBehaviour
         acquiredAbilityIcon.texture = acquired.icon;
 
         killerText.text = "You got killed by " + killer;
+
+        tipsText.text = tipsList[Random.Range(0, tipsList.Count - 1)];
     }
     public void ResetAbilityUI()
     {
@@ -115,6 +120,6 @@ public class UIManager : MonoBehaviour
                 defenceAbility.texture = icon;
                 break;
         }
-
+        
     }
 }
